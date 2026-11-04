@@ -21,7 +21,7 @@ public static class Arrays
 
         double[] result = new double[length];
 
-        // 2) Create a loop that iterates from 0 to "length - 1"
+        // 2) Create a loop that iterates from 0 to "length - 1" ( for (int i = 0; i < length; i++) )
         // 3) Inside the loop, move through the array using each index at a time
         // 4) Assign a value to each element of the array using the following formula:
 
@@ -57,14 +57,19 @@ public static class Arrays
         List<int> aux = new List<int>(new int[data.Count]);
 
         // 2) Create  a loop that iterates through each element in the original data list, from 0 to (data.count - 1), that means from first to last element.
+        // for (int i = 0; i < data.Count; i++)
 
         for (int i = 0; i < data.Count; i++)
         {
-            // 3) Inside the loop, we can calculate the new index for each element using the modulo operator to wrap around
+            // 3) Inside the loop, we can calculate the new index for each element as follows:
+            // Add "amount" to the current index (i + amount)
+            // We can use the modulo operator to wrap around
+            // if the new position goes beyond the total number of elements
+            // int newIndex = (i + amount) % data.Count;
 
             int newIndex = (i + amount) % data.Count;
 
-            // 4) Place each element from the original list into the aux. list at its corresponding "newIndex"
+            // 4) Assign each element from the original list into the aux. list at its corresponding "newIndex"
 
             aux[newIndex] = data[i];
         }
@@ -72,7 +77,7 @@ public static class Arrays
         // 5) Since we need to return original list modified, we need to clear it so it becomes empty, and then copy values from the aux list into it
         data.Clear();
 
-        // 6) Finally, we copy all rearranged elementrs from aux. list back to our original list
+        // 6) Finally, we copy all rearranged elementrs from aux. list back to our original list, using the method AddRange
 
         data.AddRange(aux);
         
