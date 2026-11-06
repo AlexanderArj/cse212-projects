@@ -3,32 +3,60 @@
 /// added and allows customers to be serviced.
 /// </summary>
 public class CustomerService {
+
     public static void Run() {
-        // Example code to see what's in the customer service queue:
-        // var cs = new CustomerService(10);
-        // Console.WriteLine(cs);
-
-        // Test Cases
-
         // Test 1
-        // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 1");
+        // Scenario: Create a queue with an invalid size 0 or negative.
+        // Expected Result: The default size should be 10.
 
-        // Defect(s) Found: 
+        Console.WriteLine("Test 1");
+        var service = new CustomerService(0);
+        Console.WriteLine(service);
+
+        // Defects Found: None. The constructor works correctly.
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 2");
+        // Scenario: Try to add more customers than the maximum queue size.
+        // Expected Result: Allow customers up to the limit and display an error when exceeded.
 
-        // Defect(s) Found: 
+        Console.WriteLine("Test 2");
+        service = new CustomerService(2);
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        Console.WriteLine(service);
+        // Defects Found:_queue.Count > _maxSize allows one extra customer
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: Serve a customer when the queue has customers.
+        // Expected Result: Display and remove the first customer added
+        Console.WriteLine("Test 3");
+        service = new CustomerService(4);
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        Console.WriteLine($"Before serving: {service}");
+        service.ServeCustomer();
+        Console.WriteLine($"After serving: {service}");
+
+        // Defects Found: ServeCustomer removes the first customer but displays the second one.
+
+        Console.WriteLine("=================");
+
+        // Test 4
+        // Scenario: Try to serve a customer when the queue is empty.
+        // Expected Result: display an error message instead of throwing an exception.
+
+        Console.WriteLine("Test 4");
+        service = new CustomerService(4);
+        service.ServeCustomer();
+
+        // Defects Found: There is no check for an empty queue
+
+        Console.WriteLine("=================");
     }
 
     private readonly List<Customer> _queue = new();
